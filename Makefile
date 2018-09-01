@@ -24,7 +24,7 @@ CXX_SRC = $(foreach n, $(SRC_PATH), $(wildcard $(n)/*.cpp))
 
 SRC := $(patsubst ./%, %, $(CXX_SRC))
 OBJ := $(addprefix $(BUILD_PATH)/, $(SRC))
-OBJ := ${OBJ:.cpp=.o}
+OBJ := $(OBJ:.cpp=.o)
 
 $(foreach n, $(SRC_PATH), $(shell mkdir -p "$(BUILD_PATH)/$(n)"))
 
@@ -42,7 +42,7 @@ $(EXE):$(OBJ)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 $(BUILD_PATH)/%.d : %.cpp
-	set -e; rm -f $@; $(CC) -MM $< $(INCLUDEFLAGS) > $@.$$$$; \
+	@set -e; rm -f $@; $(CC) -MM $< $(INCLUDEFLAGS) > $@.$$$$; \
 	sed 's,\(^[^\s]*\)\.o\s*[:],$(BUILD_PATH)/$*.o $@: ,' $@.$$$$ > $@; \
 	rm -f $@.$$$$
 
