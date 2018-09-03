@@ -13,12 +13,12 @@ CXXFLAGS += $(INCLUDEFLAGS)
 BUILD_PATH = build
 
 # exclude path
-EXCLUDE_PATH += $(BUILD_PATH)
+EXCLUDE_PATH +=
+# you own directory path split by space
 
-SRC_PATH := $(shell find . -type d)
+EXCLUDE_ARGS := $(foreach n, $(EXCLUDE_PATH),-a ! -path "./$(n)*")
+SRC_PATH := $(shell find . -type d ! -path "./$(BUILD_PATH)*" $(EXCLUDE_ARGS))
 SRC_PATH := $(patsubst ./%, %, $(SRC_PATH))
-SRC_PATH := $(filter-out $(EXCLUDE_PATH)/%, $(SRC_PATH))
-SRC_PATH := $(filter-out $(EXCLUDE_PATH), $(SRC_PATH))
 
 CXX_SRC = $(foreach n, $(SRC_PATH), $(wildcard $(n)/*.cpp))
 
@@ -36,7 +36,7 @@ DEP += $(patsubst %.o, %.d, $(OBJ))
 all:$(EXE)
 
 # use '-' ignore warning
--include $(DEP)
+# -include $(DEP)
 
 $(EXE):$(OBJ)
 	$(CXX) $(CXXFLAGS) $^ -o $@
@@ -62,7 +62,11 @@ clean:
 current_path:
 	echo $(CURRENT_PATH)
 
-.PHONY: clean
+.PHONY: exclude_args
+exclude_args:
+	echo $(EXCLUDE_ARGS)
+
+.PHONY: src_path
 src_path:
 	echo $(SRC_PATH)
 
