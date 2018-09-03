@@ -7,6 +7,13 @@ CURRENT_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 CXXFLAGS += -std=c++11
 # header search cflags
 INCLUDEFLAGS += 
+# compile link search path
+#LDFLAGS += -I/usr/local/lib
+LDFLAGS +=
+# compile link flags
+#LIBS += -lpthread
+LIBS +=
+
 CXXFLAGS += $(INCLUDEFLAGS)
 
 # build objects output path
@@ -39,7 +46,7 @@ all:$(EXE)
 # -include $(DEP)
 
 $(EXE):$(OBJ)
-	$(CXX) $(CXXFLAGS) $^ -o $@
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(LIBS) $^ -o $@
 
 $(BUILD_PATH)/%.d : %.cpp
 	@set -e; rm -f $@; $(CC) -MM $< $(INCLUDEFLAGS) > $@.$$$$; \
