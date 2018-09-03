@@ -40,7 +40,9 @@ DEP += $(patsubst %.o, %.d, $(OBJ))
 all:$(EXE)
 
 # use '-' ignore warning
+ifneq ($(MAKECMDGOALS),clean)
 -include $(DEP)
+endif
 
 $(EXE):$(OBJ)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(LIBS) $^ -o $@
