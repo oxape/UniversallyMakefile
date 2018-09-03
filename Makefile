@@ -7,11 +7,9 @@ CURRENT_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 CXXFLAGS += -std=c++11
 # header search cflags
 INCLUDEFLAGS += 
-# compile link search path
-#LDFLAGS += -I/usr/local/lib
+# compile link search path eg. -I/usr/local/lib
 LDFLAGS +=
-# compile link flags
-#LIBS += -lpthread
+# compile link flags eg. -lpthread
 LIBS +=
 
 CXXFLAGS += $(INCLUDEFLAGS)
@@ -19,9 +17,8 @@ CXXFLAGS += $(INCLUDEFLAGS)
 # build objects output path
 BUILD_PATH = build
 
-# exclude path
+# exclude path split by space
 EXCLUDE_PATH +=
-# you own directory path split by space
 
 EXCLUDE_ARGS := $(foreach n, $(EXCLUDE_PATH),-a ! -path "./$(n)*")
 SRC_PATH := $(shell find . -type d ! -path "./$(BUILD_PATH)*" $(EXCLUDE_ARGS))
