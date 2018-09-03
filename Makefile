@@ -40,7 +40,7 @@ DEP += $(patsubst %.o, %.d, $(OBJ))
 all:$(EXE)
 
 # use '-' ignore warning
-# -include $(DEP)
+-include $(DEP)
 
 $(EXE):$(OBJ)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(LIBS) $^ -o $@
